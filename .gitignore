@@ -1,0 +1,8 @@
+# 1. Ignore everything in this directory
+*
+
+# 2. Add an exception for your specific file
+!engie.py
+
+# 3. (Optional) Also track the .gitignore file itself
+!.gitignore
