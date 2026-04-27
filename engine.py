@@ -5,8 +5,8 @@ def run_optimization():
     print("HYPERSCALER CAPACITY OPTIMIZATION")
     print("=" * 60)
     
-    wb = xw.Book('Hyperscaler_Model.xlsm')
-    sht = wb.sheets['Dashboard']
+    wb = xw.Book('Optimization & Financial Model.xlsm')
+    sht = wb.sheets['Optimization Dashboard']
     sht.range('F1').value = "Running..."
 
     # Load inputs
@@ -232,7 +232,18 @@ if __name__ == "__main__":
     try:
         run_optimization()
     except Exception as e:
-        print(f"ERROR: {e}")
         import traceback
-        traceback.print_exc()
-    input("\nPress ENTER...")
+
+        # 1. Figure out exactly where the .exe is currently sitting
+        if getattr(sys, 'frozen', False):
+            current_folder = os.path.dirname(sys.executable)
+        else:
+            current_folder = os.path.dirname(os.path.abspath(__file__))
+            
+        # 2. Build the exact file path for the error log
+        error_file = os.path.join(current_folder, "error_log.txt")
+
+        with open(error_file, "w") as f:
+            f.write("THE ENGINE CRASHED. HERE IS THE REASON:\n\n")
+            f.write(traceback.format_exc())
+        sys.exit(1)
